@@ -1,0 +1,20 @@
+version: '2'
+
+services:
+    app:
+        container_name: app
+        build:
+            dockerfile: ./dockerfiles/dockerfile_app_v2
+            context: ../
+        image: demo:compose
+        ports:
+            - "80:8000"
+        networks:
+            demo-net:
+                aliases:
+                    - web.domain.local
+                ipv4_address: 172.16.35.12
+
+networks:
+    demo-net:
+        external: true

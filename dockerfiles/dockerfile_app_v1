@@ -1,0 +1,16 @@
+# Flat file
+FROM golang:1
+
+WORKDIR /go/src/app
+
+COPY . .
+
+RUN go get -d -v ./... \
+    && go install -v ./...
+
+COPY app/assets /assets
+COPY app/pages /pages
+
+EXPOSE 8000
+
+ENTRYPOINT [ "app" ]

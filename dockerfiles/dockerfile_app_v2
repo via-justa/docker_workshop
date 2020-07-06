@@ -1,0 +1,19 @@
+# Staged build
+FROM golang:1
+
+WORKDIR /go/src/app
+
+COPY . .
+
+RUN go get -d -v ./... \
+    && go build -o app ./app
+
+FROM debian:buster-slim
+
+COPY --from=0 /go/src/app/app /
+COPY app/assets /assets
+COPY app/pages /pages
+
+EXPOSE 8000
+
+ENTRYPOINT [ "/app" ]

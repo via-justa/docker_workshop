@@ -1,0 +1,3 @@
+dockerfiles/**
+docker_compose_files/**
+workshop_commends.sh

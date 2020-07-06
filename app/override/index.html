@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        html,
+        body,
+        header {
+            padding: 1rem;
+            overflow: hidden;
+            background-color: rgb(235, 243, 246);
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+
+        .container {
+            overflow: hidden;
+            height: 100%;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+        .header {
+            background: linear-gradient(180deg, rgba(74, 145, 226, 1) 0%, rgba(193, 222, 255, 1) 100%);
+            /* background-color: rgb(74, 145, 226); */
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: flex-end;
+            width: 100%;
+            padding-left: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .main {
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            justify-self: self-start;
+            justify-content: space-between;
+            align-items: flex-start;
+            width: 60%;
+        }
+
+        .img {
+            width: 64px;
+            height: 64px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="/assets/Moby-logo.png" class="img" />
+        </div>
+
+        <div class="main">
+            <h1>Welcome to Productsup docker workshop</h1>
+            <p>I'm mounted from a volume and overwritten the file in the image</p>
+            <iframe src="https://giphy.com/embed/cOB8cDnKM6eyY" width="480" height="270" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+        </div>
+    </div>
+</body>
+
+</html>
