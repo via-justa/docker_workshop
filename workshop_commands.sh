@@ -1,6 +1,17 @@
 #! /bin/bash
 
+# # prep
+# docker system prune -a 
+docker pull golang:1 && \
+    docker pull debian:buster-slim && \
+    docker pull curlimages/curl:latest && \
+    docker build -t ping -f dockerfiles/dockerfile_ping . && \
+    docker-compose -f docker_compose_files/docker-compose_v1.yml build
+
 # # Demo 1 - building an image
+# .dockerignore file
+cat .dockerignore
+
 # Building flat image
 docker build -t demo:flat -f dockerfiles/dockerfile_app_v1 .
 
@@ -29,10 +40,10 @@ docker container inspect -f "{{ .Image }}" demo1 demo2
 docker exec demo1 touch /_demofile
 
 # make sure the file exists
-docker exec demo1 ls -l /demofile
+docker exec demo1 ls -l /_demofile
 
-# see if the file exists on demo2
-docker exec demo2 ls -l /demofile
+# see if the file exists on demo2 (hint, it's not)
+docker exec demo2 ls -l /_demofile
 
 # cleanup
 docker stop demo1 demo2
@@ -65,7 +76,7 @@ docker run --rm --network host  --name demo1 demo:staged
 # start container without -p
 docker run --rm --network demo-net --ip 172.16.35.12  --name demo1 demo:staged
 # go to http://127.0.0.1/productsup (not working, why?)
-docker run --rm -it --network demo-net curlimages/curl http://web.domain.local/productsup # and that does
+docker run --rm -it --network demo-net curlimages/curl http://demo1:8000/productsup # and that does
 
 docker ps # the port is there so what's the difference
 
@@ -77,11 +88,8 @@ docker ps # the port is there so what's the difference
 docker-compose -f docker_compose_files/docker-compose_v1.yml up
 
 # Check alias
-docker run --rm -it --network demo-net debian:buster-slim /bin/bash
-apt update && apt install iputils-ping -y
-ping -c 1 app
-ping -c 1 web.domain.local
-
+docker run --rm --network demo-net ping ping -c 1 app
+docker run --rm --network demo-net ping ping -c 1 web.domain.local
 
 
 #  # Demo 6 volumes
@@ -100,5 +108,6 @@ echo "volume demo" > /demo/file-in-volume
 # file exists in the started container
 docker-compose -f docker_compose_files/docker-compose_v2.yml up
 docker-compose -f docker_compose_files/docker-compose_v2.yml exec app /bin/bash
+cat /demo/file-in-volume
 
 # go to http://127.0.0.1 (new page)
